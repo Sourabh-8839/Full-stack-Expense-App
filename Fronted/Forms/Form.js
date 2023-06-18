@@ -7,29 +7,37 @@ const email = document.getElementById('email');
 
 const password = document.getElementById('password');
 
+const msg = document.getElementById('msg');
+
 const axiosInstance = axios.create({
-    baseURL:'http://localhost:3000'
+    baseURL:'http://localhost:4000'
 })
 
 form.addEventListener('submit',onSubmit);
 
 async function onSubmit(e){
 
-    e.preventDefault();
+    try {
+        e.preventDefault();
 
  
-    const myobj={
-        Name:uName.value,
-        email:email.value,
-        password:password.value,
+        let myobj={
+            Name:uName.value,
+            email:email.value,
+            password:password.value,
+        }
+    
+        const user= await axiosInstance.post('/user/signup',myobj);
+    
+        // console.log(user);
+    
+            uName.value='';
+            email.value='';
+            password.value='';
+    } catch (error) {
+        
+        console.log(error);
     }
-
-    console.log(myobj);
-
-     await axiosInstance.post('/user/signup',myobj);
-
-        uName.value='';
-        email.value='';
-        password.value='';
+   
 
 }
