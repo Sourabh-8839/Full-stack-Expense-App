@@ -133,3 +133,7 @@ form{
 label{
     font-weight: 700;
 }
+
+.msg{
+    color: rgba(186, 19, 19, 0.826);
+}

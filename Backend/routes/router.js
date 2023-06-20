@@ -9,5 +9,6 @@ const controller = require('../controller/authentication');
 
 router.post('/user/signup',controller.addUser);
 
+router.post('/user/login',controller.loginUser);
 
 module.exports=router;

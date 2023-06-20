@@ -1,5 +1,7 @@
 
-const form =document.getElementById('form');
+const signupform =document.getElementById('form');
+
+
 
 const uName = document.getElementById('user_id');
 
@@ -13,14 +15,12 @@ const axiosInstance = axios.create({
     baseURL:'http://localhost:4000'
 })
 
-form.addEventListener('submit',onSubmit);
+signupform.addEventListener('submit',onSubmit);
 
 async function onSubmit(e){
 
     try {
         e.preventDefault();
-
- 
         let myobj={
             Name:uName.value,
             email:email.value,
@@ -29,15 +29,18 @@ async function onSubmit(e){
     
         const user= await axiosInstance.post('/user/signup',myobj);
     
-        // console.log(user);
+        
     
             uName.value='';
             email.value='';
             password.value='';
+
     } catch (error) {
-        
+        msg.classList.add('msg');
+        msg.innerHTML=error.message;
         console.log(error);
     }
    
 
 }
+
