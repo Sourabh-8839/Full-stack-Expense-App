@@ -26,6 +26,7 @@ async function onLogin(e){
         //Check User Status for Login 
         if(user.status===200){
             alert('login sucessfully')
+            window.location.href='User.html';
         }
         
     } catch (error) {

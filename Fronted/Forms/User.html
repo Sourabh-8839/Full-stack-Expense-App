@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="%23333"><path d="M1.414 11.586a2 2 0 0 1 0-2.828l5.172-5.172A2 2 0 0 1 9.586 3H24a2 2 0 0 1 2 2v14.414a2 2 0 0 1-3.293 1.414L16 10.586l-11.707 11.707A2 2 0 0 1 1 23.414V9.828a2 2 0 0 1 .414-1.242z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 16px 16px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+
+
+    .list-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      font-weight: bold;
+      padding: 8px;
+    }
+
+    /* .list-item-text {
+     
+    } */
+
+  </style>
+<body>
+    <div class="container">
+        <form id="my-form">
+          <div class="form-group">
+            <label for="name">Choose Expense Amount:</label>
+            <input type="number" id="amount" name="name" placeholder="Enter your expense" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Description:</label>
+            <input type="text" id="description" name="email" placeholder="Description" required>
+          </div>
+          <div class="form-group">
+            <label for="dropdown">Select an option:</label>
+            <select id="category" name="dropdown">
+              <option value="Food">Food</option>
+              <option value="Travel">Travel</option>
+              <option value="Movies">Movies</option>
+              <option value="petrol">Petrol</option>
+            </select>
+          </div>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+      <div class="list-container">
+        <ul id="list">
+        </ul>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="Main.js"></script>
+</body>
+</html>

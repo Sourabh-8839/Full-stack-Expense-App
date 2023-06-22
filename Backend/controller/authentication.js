@@ -59,7 +59,7 @@ exports.loginUser =async(req,res)=>{
     
         if(user.length>0){
             
-            bcrypt.compare(password,user.password,async(err,result)=>{
+            bcrypt.compare(password,user[0].password,async(err,result)=>{
     
     
                 if(err){
