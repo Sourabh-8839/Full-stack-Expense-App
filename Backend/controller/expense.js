@@ -5,9 +5,17 @@ const expense = require('../models/Expense');
 exports.getDetails =async(req,res)=>{
 
     try {
-        const users=await expense.findAll();
+        
+        const userId= req.user.id;
 
-    res.send(users);
+
+        const user=await expense.findAll({where:{
+            userId:userId
+        }});
+
+
+    res.send(user);
+
     } catch (error) {
         
         res.send(error);
@@ -16,15 +24,18 @@ exports.getDetails =async(req,res)=>{
 
 }
 
-exports.sentDeatails =async(req,res)=>{
+exports.sentDetails =async(req,res)=>{
 
     try {
-        const {amount,description,category} = req.body;
+        const {amount,description,category,userId} = req.body;
+
+        
 
    const p= await expense.create({
         amount:amount,
         description:description,
-        category:category
+        category:category,
+        userId:userId
     });
 
     res.send(p);

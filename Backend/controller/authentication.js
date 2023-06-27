@@ -2,6 +2,7 @@
 const bcrypt = require('bcrypt');
 const User =require('../models/userData');
 
+const jwt = require('jsonwebtoken');
 
 function isStringVaild(string){
 
@@ -13,6 +14,11 @@ function isStringVaild(string){
     }
 };
 
+function generateToken(id){
+
+    const secretKey='sourabh@8839'
+    return jwt.sign({userId:id},secretKey);
+}
 
 
 
@@ -68,7 +74,8 @@ exports.loginUser =async(req,res)=>{
     
     
                 if(result===true){
-                    return  res.status(200).json({msg:'succesfully Login'});
+
+                    return  res.status(200).json({msg:'succesfully Login',token:generateToken(user[0].id)});
                 }
                 else{
                     return  res.status(401).json({msg:'incorrect Password'});

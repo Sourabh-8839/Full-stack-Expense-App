@@ -4,6 +4,12 @@ const Sequelize = require('sequelize');
 const sequelize = require('../utils/dataStore');
 
 const User = sequelize.define('user',{
+    id:{
+        type:Sequelize.INTEGER,
+        allowNull:false,
+        primaryKey:true,
+        autoIncrement:true,
+    },
     Name:{
         type:Sequelize.STRING,
         allowNull:false,
@@ -11,7 +17,8 @@ const User = sequelize.define('user',{
     email:{
         type:Sequelize.STRING,
         allowNull:false,
-        unique:true
+        unique:true,
+     
     },
 
     password :{

@@ -1,4 +1,5 @@
 
+
 const userList =document.getElementById('list');
 
 const amount =document.getElementById('amount');
@@ -15,11 +16,15 @@ const axiosInstance = axios.create({
     baseURL:'http://localhost:4000'
 })
 
+const token = localStorage.getItem('token');
+
 form.addEventListener('submit',trackerdetails);
 
 window.addEventListener('DOMContentLoaded',async()=>{
 
-    const getdetails= await axiosInstance.get('/expense/getDetails');
+   
+
+    const getdetails= await axiosInstance.get('/expense/getDetails',{ headers:{"Authorization":token}});
 
     for(let i=0;i<getdetails.data.length;i++){
 
@@ -46,13 +51,14 @@ async function trackerdetails(e){
     const myobj={
         amount:amount.value,
         description:description.value,
-        category:category.options[category.selectedIndex].value
+        category:category.options[category.selectedIndex].value,
+        userId:token
     
     }
 
         console.log(myobj);
 
-        const obj=await axiosInstance.post('/expense/sentDetails',myobj);
+        const obj=await axiosInstance.post('/expense/sentDetails',myobj,{ headers:{"Authorization":token}});
 
         showOnScreen(obj.data);
        
@@ -98,7 +104,7 @@ function showOnScreen(myobj) {
 
     del.onclick = async () => {
 
-        await axiosInstance.post(`/expense/deleteDetails/${myobj.id}`);
+        await axiosInstance.post(`/expense/deleteDetails/${myobj.userId}`);
 
         userList.removeChild(li);
     }

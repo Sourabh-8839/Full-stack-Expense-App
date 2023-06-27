@@ -9,6 +9,10 @@ const bodyParser = require('body-parser');
 const routes = require('./routes/router');
 const Cors = require('cors');
 
+const User = require('./models/userData');
+const Expense = require('./models/Expense');
+
+
 
 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -18,6 +22,8 @@ app.use(Cors());
 
 app.use(routes);
 
+User.hasMany(Expense);
+Expense.belongsTo(User);
 
 
 sequelize.sync().

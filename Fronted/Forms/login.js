@@ -25,7 +25,8 @@ async function onLogin(e){
 
         //Check User Status for Login 
         if(user.status===200){
-            alert('login sucessfully')
+            alert('login sucessfully');
+            localStorage.setItem('token',user.data.token);
             window.location.href='User.html';
         }
         
