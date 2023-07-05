@@ -12,11 +12,47 @@ const form =document.getElementById('my-form');
 
 const error =document.getElementById('error');
 
-const axiosInstance = axios.create({
-    baseURL:'http://localhost:4000'
-})
+const buyPremium = document.getElementById('Premium');
 
 const token = localStorage.getItem('token');
+
+const axiosInstance = axios.create({
+    baseURL:'http://localhost:4000'
+});
+
+buyPremium.onclick= async(e)=>{
+
+    console.log("hello");       
+    const response = await axiosInstance.get('/purchase/premiummembership',{headers:{"Authorization" : token}});
+  
+
+
+    var options = {
+        "key": response.data.Key_id, // Enter the Key ID generated from the Dashboard
+        "order_id": response.data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of 
+
+        "handler":async function(response){
+
+            console.log(response.razorpay_payment_id);
+            await axiosInstance.post('/purchase/updateTransaction',{
+                order_id:this.order_id,
+                payment_id:response.razorpay_payment_id
+
+            },{headers:{"Authorization" : token}});
+
+            alert('You Are Premium user now');
+        }
+
+        
+        }
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+    e.preventDefault();
+    
+
+}
+
+
 
 form.addEventListener('submit',trackerdetails);
 

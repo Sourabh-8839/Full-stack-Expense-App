@@ -18,6 +18,7 @@
       background-color: #fff;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: relative;
     }
 
     .form-group {
@@ -82,6 +83,21 @@
       font-weight: bold;
       padding: 8px;
     }
+#Premium{
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background-color:rgb(110, 176, 234);
+  padding: 8px;
+  border-radius: 3px;
+  border: none;
+}
+
+#Premium:hover{
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.676);
+  color: whitesmoke;
+}
 
     /* .list-item-text {
      
@@ -89,6 +105,7 @@
 
   </style>
 <body>
+  
     <div class="container">
         <form id="my-form">
           <div class="form-group">
@@ -110,11 +127,17 @@
           </div>
           <input type="submit" value="Submit">
         </form>
+
+        
       </div>
+      <button id="Premium">Buy Premium </button>
       <div class="list-container">
         <ul id="list">
         </ul>
       </div>
+      
+      
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="Main.js"></script>
 </body>
