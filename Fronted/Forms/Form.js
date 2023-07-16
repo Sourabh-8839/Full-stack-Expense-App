@@ -28,12 +28,8 @@ async function onSubmit(e){
         }
     
         const user= await axiosInstance.post('/user/signup',myobj);
-    
         
-    
-            uName.value='';
-            email.value='';
-            password.value='';
+        window.location.href ="SingIn.html"
 
     } catch (error) {
         msg.classList.add('msg');

@@ -4,6 +4,8 @@ const User =require('../models/userData');
 
 const jwt = require('jsonwebtoken');
 
+require('dotenv').config();
+
 function isStringVaild(string){
 
     if(string==undefined||string.length==0){
@@ -14,15 +16,16 @@ function isStringVaild(string){
     }
 };
 
-function generateToken(id){
+const generateToken=async(id,isPremiumUser)=>{
 
-    const secretKey='sourabh@8839'
-    return jwt.sign({userId:id},secretKey);
+    const secretKey='sourabh@8839';
+    
+    return jwt.sign({userId:id,isPremiumUser:isPremiumUser},secretKey);
 }
 
 
 
-exports.addUser = async(req,res)=>{
+const addUser = async(req,res)=>{
 
 try {
     const {Name,email,password}= req.body;
@@ -51,7 +54,7 @@ try {
  };
 
 
-exports.loginUser =async(req,res)=>{
+const loginUser =async(req,res)=>{
 
     // console.log(req.body);
 
@@ -62,6 +65,7 @@ exports.loginUser =async(req,res)=>{
             email:email,
         }});
     
+        console.log(user);
     
         if(user.length>0){
             
@@ -75,7 +79,10 @@ exports.loginUser =async(req,res)=>{
     
                 if(result===true){
 
-                    return  res.status(200).json({msg:'succesfully Login',token:generateToken(user[0].id)});
+                    // console.log(user[0].isPremiumUser);
+
+                    // const token=generateToken(user[0].id,user[0].isPremiumUser);
+                    return  res.status(200).json({msg:'succesfully Login',token:jwt.sign({userId:user[0].id,isPremiumUser:user[0].isPremiumUser},process.env.JWT_SECRETKEY)});
                 }
                 else{
                     return  res.status(401).json({msg:'incorrect Password'});
@@ -96,7 +103,12 @@ exports.loginUser =async(req,res)=>{
      
 
 
- 
+ module.exports={
+    loginUser,
+    addUser,
+    generateToken
+
+ }
        
 
    

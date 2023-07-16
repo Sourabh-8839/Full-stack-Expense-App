@@ -11,6 +11,9 @@ const orderController= require('../controller/Order');
 
 const UserAuthentication = require('../middleware/auth');
 
+const leaderboard = require('../controller/premiumUser');
+
+
 
 
 //User details 
@@ -28,4 +31,6 @@ router.post('/expense/deleteDetails/:id',expenseController.deleteDetails);
 router.get('/purchase/premiummembership',UserAuthentication.authentication,orderController.purchaseMemberShip);
 router.post('/purchase/updateTransaction',UserAuthentication.authentication,orderController.updateMember);
 
+//for premiumuser
+router.get('/premium/showLeaderboard', leaderboard.showLeaderBoard)
 module.exports=router;

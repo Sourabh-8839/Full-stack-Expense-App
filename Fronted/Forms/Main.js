@@ -16,31 +16,64 @@ const buyPremium = document.getElementById('Premium');
 
 const token = localStorage.getItem('token');
 
+//buttons
+const showLeaderBoard =document.getElementById('leader');
+
+const premiumUser = document.getElementById('premiumUser');
 const axiosInstance = axios.create({
     baseURL:'http://localhost:4000'
 });
 
+
+
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+
+
+//premium User message
+const showPremiumMessage =()=>{
+    buyPremium.style.visibility='hidden';
+    
+    
+
+    premiumUser.innerHTML ="You are Premium User";
+}
+
+
+// Onclick event on premium button
 buyPremium.onclick= async(e)=>{
 
-    console.log("hello");       
-    const response = await axiosInstance.get('/purchase/premiummembership',{headers:{"Authorization" : token}});
+          
+    const response = await axiosInstance.get('/purchase/premiummembership',{headers:{"authorization" : token}});
   
 
 
     var options = {
+        
         "key": response.data.Key_id, // Enter the Key ID generated from the Dashboard
         "order_id": response.data.order.id, //This is a sample Order ID. Pass the `id` obtained in the response of 
 
         "handler":async function(response){
 
-            console.log(response.razorpay_payment_id);
-            await axiosInstance.post('/purchase/updateTransaction',{
-                order_id:this.order_id,
+           const completeTransaction= await axiosInstance.post('/purchase/updateTransaction',{
+                order_id:response.razorpay_order_id,
                 payment_id:response.razorpay_payment_id
 
             },{headers:{"Authorization" : token}});
 
             alert('You Are Premium user now');
+
+            showPremiumMessage();
+            localStorage.setItem("token",completeTransaction.data.token)
+            
         }
 
         
@@ -53,15 +86,29 @@ buyPremium.onclick= async(e)=>{
 }
 
 
+showLeaderBoard.onclick =async(e)=>{
+    
+}
 
 form.addEventListener('submit',trackerdetails);
 
 window.addEventListener('DOMContentLoaded',async()=>{
 
-   
 
-    const getdetails= await axiosInstance.get('/expense/getDetails',{ headers:{"Authorization":token}});
+    const declareToken = parseJwt(token);
 
+    if(declareToken.isPremiumUser){
+       showPremiumMessage();
+       showLeaderBoard.style.display = 'block';
+      
+    }
+    else{
+        showLeaderBoard.style.visibility = 'hidden'
+    }
+    console.log(token);
+    const getdetails= await axiosInstance.get('/expense/getDetails',{ headers:{"authorization":token}});
+
+    console.log(getdetails);
     for(let i=0;i<getdetails.data.length;i++){
 
         showOnScreen(getdetails.data[i]);

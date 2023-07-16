@@ -1,13 +1,13 @@
 
 const expense = require('../models/Expense');
+const User = require('../models/userData');
 
 
 exports.getDetails =async(req,res)=>{
 
     try {
-        
-        const userId= req.user.id;
 
+        const userId= req.user.id;
 
         const user=await expense.findAll({where:{
             userId:userId
@@ -18,6 +18,7 @@ exports.getDetails =async(req,res)=>{
 
     } catch (error) {
         
+        console.log(error);
         res.send(error);
     }
     

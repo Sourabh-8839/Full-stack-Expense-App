@@ -20,10 +20,11 @@ async function onLogin(e){
             password:password.value,
         }
 
-        console.log(myobj);
         const user = await axiosInstance.post('/user/login',myobj);
 
         //Check User Status for Login 
+
+        console.log(user);
         if(user.status===200){
             alert('login sucessfully');
             localStorage.setItem('token',user.data.token);

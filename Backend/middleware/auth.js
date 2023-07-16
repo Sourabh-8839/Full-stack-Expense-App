@@ -2,14 +2,18 @@
 const jwt=require('jsonwebtoken');
 const Users =require('../models/userData');
 
+require('dotenv').config();
+
 
 const authentication = async(req,res,next)=>{
 
     try {
-        const token = req.header('Authorization');
+        
+        const token = req.header('authorization');
+      
+        const userData = await jwt.verify(token,process.env.JWT_SECRETKEY);
 
-        const userData = await jwt.verify(token,'sourabh@8839');
-
+      
         const userId =userData.userId;
 
        const user=await Users.findByPk(userId);
@@ -28,7 +32,7 @@ const authentication = async(req,res,next)=>{
 const checkUserIdentiy =async(req,res,next)=>{
     try {
         const {userId}= req.body;
-        const userData = await jwt.verify(userId,'sourabh@8839');
+        const userData = await jwt.verify(userId,process.env.JWT_SECRETKEY );
 
         const userID = userData.userId;
         req.body.userId=userID;

@@ -20,6 +20,15 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       position: relative;
     }
+    .LeaderBoard{
+      max-width: 400px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      list-style: none;
+      }
 
     .form-group {
       margin-bottom: 20px;
@@ -99,14 +108,34 @@
   color: whitesmoke;
 }
 
-    /* .list-item-text {
-     
-    } */
+#leader{
+  background-color:rgb(110, 176, 234);
+  padding: 8px;
+  border-radius: 3px;
+  border: none;
+}
 
-  </style>
-<body>
+#expense{
+    background-color: rgb(214, 231, 225);
+    padding:10px ;
+    border-radius: 10px;
+    margin: 10px;
   
+  }
+
+
+
+
+ </style>
+<body>
+  <div>
+  <button id="leader">Show LeaderBoard</button>
+  <ul class="LeaderBoard">
+      <li> Sourabh singh Thakur  :<span id="expense">500</span></li>
+  </ul>
+</div>
     <div class="container">
+      <Span id="premiumUser"></Span>
         <form id="my-form">
           <div class="form-group">
             <label for="name">Choose Expense Amount:</label>
@@ -130,7 +159,9 @@
 
         
       </div>
+      <div>
       <button id="Premium">Buy Premium </button>
+    </div>
       <div class="list-container">
         <ul id="list">
         </ul>
