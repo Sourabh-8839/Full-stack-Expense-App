@@ -32,5 +32,5 @@ router.get('/purchase/premiummembership',UserAuthentication.authentication,order
 router.post('/purchase/updateTransaction',UserAuthentication.authentication,orderController.updateMember);
 
 //for premiumuser
-router.get('/premium/showLeaderboard', leaderboard.showLeaderBoard)
+router.get('/premium/showLeaderboard',UserAuthentication.authentication, leaderboard.showLeaderBoard)
 module.exports=router;

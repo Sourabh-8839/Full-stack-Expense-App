@@ -1,175 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="user.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-<style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      position: relative;
-    }
-    .LeaderBoard{
-      max-width: 400px;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      position: absolute;
-      list-style: none;
-      }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    input,
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    select {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="%23333"><path d="M1.414 11.586a2 2 0 0 1 0-2.828l5.172-5.172A2 2 0 0 1 9.586 3H24a2 2 0 0 1 2 2v14.414a2 2 0 0 1-3.293 1.414L16 10.586l-11.707 11.707A2 2 0 0 1 1 23.414V9.828a2 2 0 0 1 .414-1.242z"/></svg>');
-      background-repeat: no-repeat;
-      background-position: right 8px center;
-      background-size: 16px 16px;
-    }
-
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #45a049;
-    }
-
-
-
-    .list-container {
-      max-width: 400px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .list-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      font-weight: bold;
-      padding: 8px;
-    }
-#Premium{
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  background-color:rgb(110, 176, 234);
-  padding: 8px;
-  border-radius: 3px;
-  border: none;
-}
-
-#Premium:hover{
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.676);
-  color: whitesmoke;
-}
-
-#leader{
-  background-color:rgb(110, 176, 234);
-  padding: 8px;
-  border-radius: 3px;
-  border: none;
-}
-
-#expense{
-    background-color: rgb(214, 231, 225);
-    padding:10px ;
-    border-radius: 10px;
-    margin: 10px;
-  
-  }
-
-
-
-
- </style>
 <body>
-  <div>
-  <button id="leader">Show LeaderBoard</button>
-  <ul class="LeaderBoard">
-      <li> Sourabh singh Thakur  :<span id="expense">500</span></li>
-  </ul>
-</div>
-    <div class="container">
-      <Span id="premiumUser"></Span>
-        <form id="my-form">
-          <div class="form-group">
-            <label for="name">Choose Expense Amount:</label>
-            <input type="number" id="amount" name="name" placeholder="Enter your expense" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Description:</label>
-            <input type="text" id="description" name="email" placeholder="Description" required>
-          </div>
-          <div class="form-group">
-            <label for="dropdown">Select an option:</label>
-            <select id="category" name="dropdown">
-              <option value="Food">Food</option>
-              <option value="Travel">Travel</option>
-              <option value="Movies">Movies</option>
-              <option value="petrol">Petrol</option>
-            </select>
-          </div>
-          <input type="submit" value="Submit">
-        </form>
-
-        
-      </div>
-      <div>
-      <button id="Premium">Buy Premium </button>
+  <!-- Navigation bar -->
+  <div class="navbar">
+    <a href="#home">Expense Tracker</a>
+    <div>
+        <button class="navButtons" id ="ShowLeaderBoard" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">LeaderBoard</button>
+        <button class="navButtons" id="PremiumButton">Buy Premium</button>
+        <button class="navButtons" id="Logout">Logout</button>
     </div>
-      <div class="list-container">
-        <ul id="list">
-        </ul>
+  </div>
+
+  <div class="offcanvas offcanvas-end w-100" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">LeaderBoard</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="totalExpense">
+        <h3>
+          Name
+        </h3>
+        <h3>Total Expense</h3>
       </div>
+
+      <ul class="userExpense" id="LeaderBoard">
       
-      
-      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      <script src="Main.js"></script>
+
+      </ul>
+
+    </div>
+  </div>
+
+
+  <!-- Input fields container -->
+  <form class="input-container" id="my-form">
+   
+    <div class="input-field">
+      <label for="field1">Expense Amount:</label>
+      <input type="text" id="amount" name="field1" placeholder="Enter value" required>
+    </div>
+    <div class="input-field">
+      <label for="field2">Description:</label>
+      <input type="text" id="description" name="field2" placeholder="Enter value" required>
+    </div>
+    <div class="input-field">
+        <label for="dropdown">Select an option:</label>
+        <select class="input"  id="category" name="dropdown">
+          <option value="Food">Food</option>
+          <option value="Travel">Travel</option>
+          <option value="Movies">Movies</option>
+          <option value="petrol">Petrol</option>
+          <option>Others </option>
+        </select>
+      </div>
+    <button type="submit" class="submit-button">Submit</button>
+   
+  </form>
+
+
+  <div class="input-container">
+    <h2>Expense</h2>
+
+    <ul class="Expenselist" id="userList">
+      <li class="list">shoes dailyExpense 500<div class="buttons-container">
+        <button>edit</button>
+        <button>delete</button>
+      </div></li>
+  </div>
 </body>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+<script src="main.js"></script>
 </html>

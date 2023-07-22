@@ -19,6 +19,7 @@ const authentication = async(req,res,next)=>{
        const user=await Users.findByPk(userId);
 
        req.user = user;
+       
 
        next()
 

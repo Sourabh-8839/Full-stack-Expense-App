@@ -1,6 +1,6 @@
 
 
-const userList =document.getElementById('list');
+const userList =document.getElementById('userList');
 
 const amount =document.getElementById('amount');
 
@@ -12,14 +12,28 @@ const form =document.getElementById('my-form');
 
 const error =document.getElementById('error');
 
-const buyPremium = document.getElementById('Premium');
+const buyPremium = document.getElementById('PremiumButton');
 
 const token = localStorage.getItem('token');
 
-//buttons
-const showLeaderBoard =document.getElementById('leader');
+const LeaderBoard = document.getElementById('ShowLeaderBoard');
 
-const premiumUser = document.getElementById('premiumUser');
+const Logout = document.getElementById('Logout');
+
+// const message = document.getElementById('message');
+
+//buttons
+
+LeaderBoard.onclick=()=>{
+    console.log('hello');
+    showLeaderBoard();
+}
+
+Logout.onclick=()=>{
+    alert("Are you want to Logout");
+    window.location.href = 'SignIn.html'
+}
+
 const axiosInstance = axios.create({
     baseURL:'http://localhost:4000'
 });
@@ -41,10 +55,8 @@ function parseJwt (token) {
 //premium User message
 const showPremiumMessage =()=>{
     buyPremium.style.visibility='hidden';
+    LeaderBoard.style.display='inline';
     
-    
-
-    premiumUser.innerHTML ="You are Premium User";
 }
 
 
@@ -73,6 +85,7 @@ buyPremium.onclick= async(e)=>{
 
             showPremiumMessage();
             localStorage.setItem("token",completeTransaction.data.token)
+            // showLeaderBoard();
             
         }
 
@@ -86,9 +99,7 @@ buyPremium.onclick= async(e)=>{
 }
 
 
-showLeaderBoard.onclick =async(e)=>{
-    
-}
+
 
 form.addEventListener('submit',trackerdetails);
 
@@ -99,16 +110,16 @@ window.addEventListener('DOMContentLoaded',async()=>{
 
     if(declareToken.isPremiumUser){
        showPremiumMessage();
-       showLeaderBoard.style.display = 'block';
+    //    showLeaderBoard();
       
     }
     else{
         showLeaderBoard.style.visibility = 'hidden'
     }
-    console.log(token);
+ 
     const getdetails= await axiosInstance.get('/expense/getDetails',{ headers:{"authorization":token}});
 
-    console.log(getdetails);
+    
     for(let i=0;i<getdetails.data.length;i++){
 
         showOnScreen(getdetails.data[i]);
@@ -119,16 +130,6 @@ window.addEventListener('DOMContentLoaded',async()=>{
 async function trackerdetails(e){
     e.preventDefault();
 
-    // if(amount.value==='' || description.value==='' || category.value===''){
-        
-    //     error.classList.add('error');
-
-    //     error.innerHTML ="Please fill the fields";
-
-    //     setTimeout(()=>error.remove(),4000);
-
-    // }
-    // else{
    
    
     const myobj={
@@ -143,7 +144,7 @@ async function trackerdetails(e){
 
         const obj=await axiosInstance.post('/expense/sentDetails',myobj,{ headers:{"Authorization":token}});
 
-        showOnScreen(obj.data);
+        showOnScreen(myobj);
        
 
     amount.value='';
@@ -155,35 +156,30 @@ function showOnScreen(myobj) {
 
     const li = document.createElement('li');
 
-   
+   const div = document.createElement('div');
 
     const del = document.createElement('button');
+
+    div.classList.add('buttons-container')
 
     //edit button
     const edit = document.createElement('button');
     edit.innerHTML = 'Edit';
-    edit.classList.add('Add');
-
-
-    //  Delete button
-    del.innerHTML = 'Delete Products';
-    // del.classList.add('');
-    // del.style.margin='0px 6px';
-    // del.style.padding='0px 6px';
-
-  
     
+    //  Delete button
+    del.innerHTML = 'Delete';
+    
+    div.appendChild(edit);
+    div.appendChild(del);
+   
+    li.appendChild(document.createTextNode(`${myobj.amount}  ${myobj.description}   ${myobj.category}`));
 
-    li.appendChild(document.createTextNode(`${myobj.amount},${myobj.description},${myobj.category}`));
+    li.appendChild(div);
 
-    li.appendChild(edit);
-
-    li.appendChild(del);
-
-    userList.classList.add('ul')
+   
     userList.appendChild(li);
 
-    li.classList.add('list-item');
+
 
     del.onclick = async () => {
 
@@ -205,5 +201,35 @@ function showOnScreen(myobj) {
     }
 
 
+
+}
+
+
+async function showLeaderBoard(){
+
+        const token = localStorage.getItem('token');
+        const res=await axiosInstance.get('/premium/showLeaderboard',{headers:{"authorization":token}});
+
+        const leaderboard = document.getElementById('LeaderBoard');
+
+        console.log(leaderboard);
+        
+        // leaderboard.innerHTML="<h1>LeaderBoard</h1>";
+        res.data.forEach(userDetails=> {
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            leaderboard.classList.add('userExpense');
+            span.classList.add('pAmount')
+
+            span.appendChild(document.createTextNode(`${userDetails.total_cost}`));
+            li.appendChild(document.createTextNode(`${userDetails.Name}`));
+            li.appendChild(span);
+
+            leaderboard.appendChild(li);
+        
+       
+    });
+   
+    
 
 }
