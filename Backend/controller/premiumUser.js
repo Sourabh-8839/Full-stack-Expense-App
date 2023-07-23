@@ -3,41 +3,40 @@ const User = require('../models/userData');
 
 const Expense = require('../models/Expense');
 
-const sequilize = require('../utils/dataStore')
+const sequelize = require('../utils/dataStore');
+const { Sequelize } = require('sequelize');
 
 
 
 exports.showLeaderBoard = async(req,res)=>{
 
-    const leaderboard = {}
-        
-    const Expenses = await Expense.findAll();
+    const leaderboardOfUser= await User.findAll({
 
-    const Users = await User.findAll();
+        attributes:['Name','id',[Sequelize.fn('sum',Sequelize.col('amount')),'total_cost']],
+        include:[
+            {
+                model:Expense,
+                attributes:[],
+            }
+        ]
+        ,
+        group:['user.id'],
+        order:[[Sequelize.col('total_cost'),"DESC"]]
 
-    Expenses.forEach((expense)=>{
+    });
 
-        if(leaderboard[expense.userId]){
-            leaderboard[expense.userId]=  leaderboard[expense.userId]+ expense.amount;
-        }
-        else{
-            leaderboard[expense.userId]=expense.amount;
-        }
-        
+    // const userLeaderBoard=[];
+    // Users.forEach((user)=>{
 
-    })
-    const userLeaderBoard=[];
-    Users.forEach((user)=>{
+    //     userLeaderBoard.push({Name:user.Name , total_cost:leaderboard[user.id]});
 
-        userLeaderBoard.push({Name:user.Name , total_cost:leaderboard[user.id]});
+    // })
 
-    })
+    // userLeaderBoard.sort((a,b)=>b.total_cost-a.total_cost);
 
-    userLeaderBoard.sort((a,b)=>b.total_cost-a.total_cost);
+    console.log(leaderboardOfUser);
 
-    console.log(userLeaderBoard);
-
-    res.status(200).json(userLeaderBoard);
+    res.status(200).json(leaderboardOfUser);
 
     
     
