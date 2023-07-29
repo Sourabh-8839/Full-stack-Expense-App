@@ -1,4 +1,5 @@
 
+const { where } = require('sequelize');
 const expense = require('../models/Expense');
 const User = require('../models/userData');
 
@@ -31,7 +32,11 @@ exports.sentDetails =async(req,res)=>{
         const {amount,description,category,userId} = req.body;
 
         
-
+        User.increment(
+            {TotalExpense:+amount},
+            {where:{
+                id:userId
+                } })
    const p= await expense.create({
         amount:amount,
         description:description,

@@ -65,7 +65,7 @@ const loginUser =async(req,res)=>{
             email:email,
         }});
     
-        console.log(user);
+       
     
         if(user.length>0){
             

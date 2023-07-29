@@ -10,29 +10,32 @@ const { Sequelize } = require('sequelize');
 
 exports.showLeaderBoard = async(req,res)=>{
 
-    const leaderboardOfUser= await User.findAll({
+    //using Join 
+    // const leaderboardOfUser= await User.findAll({
 
-        attributes:['Name','id',[Sequelize.fn('sum',Sequelize.col('amount')),'total_cost']],
-        include:[
-            {
-                model:Expense,
-                attributes:[],
-            }
-        ]
-        ,
-        group:['user.id'],
-        order:[[Sequelize.col('total_cost'),"DESC"]]
+    //     attributes:['Name','id',[Sequelize.fn('sum',Sequelize.col('amount')),'total_cost']],
+    //     include:[
+    //         {
+    //             model:Expense,
+    //             attributes:[],
+    //         }
+    //     ]
+    //     ,
+    //     group:['user.id'],
+    //     order:[[Sequelize.col('total_cost'),"DESC"]]
 
-    });
+    // });
 
-    // const userLeaderBoard=[];
-    // Users.forEach((user)=>{
+    //Optimize method to get leaderboard
 
-    //     userLeaderBoard.push({Name:user.Name , total_cost:leaderboard[user.id]});
+    const leaderboardOfUser= await User.findAll(
+        {
+            attributes:['Name','id','TotalExpense'],
+        }
+    )
+        
 
-    // })
-
-    // userLeaderBoard.sort((a,b)=>b.total_cost-a.total_cost);
+    
 
     console.log(leaderboardOfUser);
 

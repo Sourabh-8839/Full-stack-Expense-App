@@ -110,12 +110,9 @@ window.addEventListener('DOMContentLoaded',async()=>{
 
     if(declareToken.isPremiumUser){
        showPremiumMessage();
-    //    showLeaderBoard();
       
     }
-    else{
-        showLeaderBoard.style.visibility = 'hidden'
-    }
+    
  
     const getdetails= await axiosInstance.get('/expense/getDetails',{ headers:{"authorization":token}});
 
@@ -211,6 +208,8 @@ async function showLeaderBoard(){
         const res=await axiosInstance.get('/premium/showLeaderboard',{headers:{"authorization":token}});
 
         const leaderboard = document.getElementById('LeaderBoard');
+
+        console.log(res);
 
         console.log(leaderboard);
         
