@@ -137,7 +137,7 @@ async function trackerdetails(e){
     
     }
 
-        console.log(myobj);
+        
 
         const obj=await axiosInstance.post('/expense/sentDetails',myobj,{ headers:{"Authorization":token}});
 
@@ -177,10 +177,10 @@ function showOnScreen(myobj) {
     userList.appendChild(li);
 
 
-
+    console.log(myobj);
     del.onclick = async () => {
 
-        await axiosInstance.post(`/expense/deleteDetails/${myobj.userId}`);
+        await axiosInstance.delete(`/expense/deleteDetails/${myobj.id}`,{ headers:{"Authorization":token}});
 
         userList.removeChild(li);
     }
@@ -211,7 +211,6 @@ async function showLeaderBoard(){
 
         console.log(res);
 
-        console.log(leaderboard);
         
         // leaderboard.innerHTML="<h1>LeaderBoard</h1>";
         res.data.forEach(userDetails=> {
@@ -220,7 +219,7 @@ async function showLeaderBoard(){
             leaderboard.classList.add('userExpense');
             span.classList.add('pAmount')
 
-            span.appendChild(document.createTextNode(`${userDetails.total_cost}`));
+            span.appendChild(document.createTextNode(`${userDetails.TotalExpense}`));
             li.appendChild(document.createTextNode(`${userDetails.Name}`));
             li.appendChild(span);
 

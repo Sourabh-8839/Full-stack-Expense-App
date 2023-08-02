@@ -5,6 +5,15 @@ const email = document.getElementById('user_id');
 
 const password = document.getElementById('password');
 
+const forgotPassword = document.getElementById('fPAssword');
+
+const form = document.getElementById('form');
+
+const fEmail = document.getElementById('email');
+
+console.log(forgotPassword);
+
+
 const axiosInstance = axios.create({
     baseURL:'http://localhost:4000'
 })
@@ -35,3 +44,9 @@ async function onLogin(e){
         console.log(JSON.stringify(error));
     }
 }
+
+forgotPassword.onclick=()=>{
+
+    window.location.href='Emailverfication.html'
+}
+

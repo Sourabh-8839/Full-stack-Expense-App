@@ -13,7 +13,7 @@ const UserAuthentication = require('../middleware/auth');
 
 const leaderboard = require('../controller/premiumUser');
 
-
+const EmailVerification = require('../controller/verification');
 
 
 //User details 
@@ -21,11 +21,14 @@ router.post('/user/signup',controllerAuthentication.addUser);
 
 router.post('/user/login',controllerAuthentication.loginUser);
 
+//Forgot Password
+router.post('/password/forgotpassword',EmailVerification.forgotPassword);
+
 //For Expense
 router.get('/expense/getDetails',UserAuthentication.authentication,expenseController.getDetails);
 
 router.post('/expense/sentDetails',UserAuthentication.checkUserIdentiy,expenseController.sentDetails);
-router.post('/expense/deleteDetails/:id',expenseController.deleteDetails);
+router.delete('/expense/deleteDetails/:id',expenseController.deleteDetails);
 
 //For Orders
 router.get('/purchase/premiummembership',UserAuthentication.authentication,orderController.purchaseMemberShip);
@@ -33,4 +36,8 @@ router.post('/purchase/updateTransaction',UserAuthentication.authentication,orde
 
 //for premiumuser
 router.get('/premium/showLeaderboard',UserAuthentication.authentication, leaderboard.showLeaderBoard)
+
+
 module.exports=router;
+
+

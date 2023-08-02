@@ -1,8 +1,6 @@
 
 const signupform =document.getElementById('form');
 
-
-
 const uName = document.getElementById('user_id');
 
 const email = document.getElementById('email');

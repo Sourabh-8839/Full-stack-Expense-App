@@ -31,13 +31,14 @@ exports.showLeaderBoard = async(req,res)=>{
     const leaderboardOfUser= await User.findAll(
         {
             attributes:['Name','id','TotalExpense'],
+            order:[[Sequelize.col('TotalExpense'),"DESC"]]
         }
     )
         
 
     
 
-    console.log(leaderboardOfUser);
+    // console.log(leaderboardOfUser);
 
     res.status(200).json(leaderboardOfUser);
 

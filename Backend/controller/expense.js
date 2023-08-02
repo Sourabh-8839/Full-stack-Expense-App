@@ -1,7 +1,8 @@
 
-const { where } = require('sequelize');
 const expense = require('../models/Expense');
 const User = require('../models/userData');
+
+const sequelize = require('../utils/dataStore');
 
 
 exports.getDetails =async(req,res)=>{
@@ -28,42 +29,64 @@ exports.getDetails =async(req,res)=>{
 
 exports.sentDetails =async(req,res)=>{
 
+    const t = await sequelize.transaction();
+
     try {
         const {amount,description,category,userId} = req.body;
 
         
-        User.increment(
-            {TotalExpense:+amount},
-            {where:{
-                id:userId
-                } })
-   const p= await expense.create({
-        amount:amount,
-        description:description,
-        category:category,
-        userId:userId
-    });
+            const p= await expense.create({
+                amount:amount,
+                description:description,
+                category:category,
+                userId:userId
+            },{transaction:t});
+    
+             await User.update(
+                {TotalExpense:+amount},
+                {where:{
+                    id:userId},
+                transaction:t });
 
-    res.send(p);
-    } catch (error) {
-        
-        res.send(error);
+      
+                await t.commit();
+                res.status(200).json(p);
+
+            }
+
+     catch  (error){
+
+        await t.rollback();
+        res.status(500).json(error);
     }
-
 }
 
-exports.deleteDetails =async(req,res)=>{
+    
 
+exports.deleteDetails =async(req,res)=>{
+    const t = await sequelize.transaction();
     try {
         const id = req.params.id;
+        const {userId} = req.body;
 
-    await expense.destroy({where:{
+        
+
+    const amount=await expense.destroy({where:{
         id:id
-    }})
+    }},{transaction:t});
 
-    res.send('delete Successfully');
+    console.log(amount);
+     
+    await User.update(
+        {TotalExpense:-amount},
+        {whre:{
+            id:userId} });
+
+    await t.commit();
+    res.send(amount)
     } catch (error) {
         
+        await t.rollback();
         res.send(error);
     }
     
