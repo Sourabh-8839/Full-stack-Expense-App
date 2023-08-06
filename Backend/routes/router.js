@@ -13,7 +13,7 @@ const UserAuthentication = require('../middleware/auth');
 
 const leaderboard = require('../controller/premiumUser');
 
-const EmailVerification = require('../controller/verification');
+
 
 
 //User details 
@@ -21,8 +21,9 @@ router.post('/user/signup',controllerAuthentication.addUser);
 
 router.post('/user/login',controllerAuthentication.loginUser);
 
-//Forgot Password
-router.post('/password/forgotpassword',EmailVerification.forgotPassword);
+
+
+
 
 //For Expense
 router.get('/expense/getDetails',UserAuthentication.authentication,expenseController.getDetails);

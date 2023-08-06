@@ -141,7 +141,7 @@ async function trackerdetails(e){
 
         const obj=await axiosInstance.post('/expense/sentDetails',myobj,{ headers:{"Authorization":token}});
 
-        showOnScreen(myobj);
+        showOnScreen(obj.data);
        
 
     amount.value='';

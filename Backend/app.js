@@ -12,6 +12,10 @@ const Cors = require('cors');
 const User = require('./models/userData');
 const Expense = require('./models/Expense');
 const Order = require('./models/order');
+const ForgotPassword = require('./models/ForgotPasswordRequest');
+
+
+const resetpassword = require('./routes/resetpassword');
 
 
 
@@ -23,11 +27,17 @@ app.use(Cors());
 
 app.use(routes);
 
+app.use(resetpassword);
+
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(ForgotPassword);
+ForgotPassword.belongsTo(User);
+
 
 
 sequelize.sync().
