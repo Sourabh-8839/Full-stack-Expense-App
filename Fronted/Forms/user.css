@@ -69,7 +69,10 @@ body {
     color: #fff;
   }
 
-  #ShowLeaderBoard{
+  /* #ShowLeaderBoard{
+    display:none;
+  } */
+  .showInboard{
     display:none;
   }
 
@@ -80,6 +83,7 @@ body {
     border-radius: 4px;
     box-sizing: border-box;
   }
+
   .submit-button {
     margin-top: 20px;
     background-color:#837e7e7d;

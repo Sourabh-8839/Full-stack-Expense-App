@@ -20,6 +20,9 @@ const LeaderBoard = document.getElementById('ShowLeaderBoard');
 
 const Logout = document.getElementById('Logout');
 
+const Download = document.getElementById('Download');
+
+
 // const message = document.getElementById('message');
 
 //buttons
@@ -56,6 +59,8 @@ function parseJwt (token) {
 const showPremiumMessage =()=>{
     buyPremium.style.visibility='hidden';
     LeaderBoard.style.display='inline';
+    Download.style.display = 'inline';
+
     
 }
 
@@ -229,5 +234,36 @@ async function showLeaderBoard(){
     });
    
     
+
+}
+
+
+// Download Files
+
+Download.onclick=async()=>{
+
+    try {
+
+        const response= await axiosInstance.get('/user/download',{headers:{Authorization:token}});
+    
+        console.log(response);
+        if(response.status===200){
+     
+         const a = document.createElement('a');
+     
+         a.href =response.data.fileURL;
+     
+         a.download ='myexpense.csv';
+     
+         a.click();
+        }
+        
+        
+    } catch (error) {
+        throw new Error(response.data.message);
+        console.log(error);
+
+    }
+ 
 
 }

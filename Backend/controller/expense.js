@@ -1,11 +1,85 @@
 
+const {Upload} = require('@aws-sdk/lib-storage');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const expense = require('../models/Expense');
 const User = require('../models/userData');
 
+const {getSignedUrl} =require('@aws-sdk/s3-request-presigner');
+
+
+
 const sequelize = require('../utils/dataStore');
 
+const IAM_USER_KEY = 'AKIAZZ2B3CY5VEDKOFGT';
+const IAM_USER_SECRETKEY = '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';
 
-exports.getDetails =async(req,res)=>{
+
+
+const S3 = new S3Client({
+    region:'eu-north-1',
+    credentials:{
+    accessKeyId:IAM_USER_KEY,
+    secretAccessKey:IAM_USER_SECRETKEY,
+    }
+})
+
+const uploadToS3=async(data,fileName)=>{
+
+    const Bucket_Name = 'expenselist';
+  
+    try {
+        const parallelUploads3 = new Upload({
+          client:S3,
+          params: { 
+            Bucket:Bucket_Name,
+            Key:fileName,
+            Body:data,
+            ACL:'public-read'
+         },
+        })
+    
+        parallelUploads3.on("httpUploadProgress",(progress)=>{
+            console.log(progress);
+        });
+      
+        const url=await parallelUploads3.done();
+        
+        return url.Location;
+        
+
+      } catch (e) {
+        console.log(e);
+      };
+ };
+
+
+
+const download = async(req,res)=>{
+    try {
+        const expense = await req.user.getExpenses();
+
+        const userId = req.user.id;
+    
+        
+        const strigifyData = JSON.stringify(expense);
+        const fileName = `Expense${userId}/${new Date()}.txt`;
+        const fileURL = await uploadToS3(strigifyData,fileName);
+    
+        console.log(fileURL);
+    
+        res.status(200).json({fileURL,success:true});
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({fileURL:'',success:false,err:error});
+    }
+
+   
+    
+}
+
+
+const getDetails =async(req,res)=>{
 
     try {
 
@@ -27,7 +101,7 @@ exports.getDetails =async(req,res)=>{
 
 }
 
-exports.sentDetails =async(req,res)=>{
+const sentDetails =async(req,res)=>{
 
     const t = await sequelize.transaction();
 
@@ -63,7 +137,7 @@ exports.sentDetails =async(req,res)=>{
 
     
 
-exports.deleteDetails =async(req,res)=>{
+const deleteDetails =async(req,res)=>{
     const t = await sequelize.transaction();
     try {
         const id = req.params.id;
@@ -90,5 +164,13 @@ exports.deleteDetails =async(req,res)=>{
         res.send(error);
     }
     
+
+}
+
+module.exports={
+    getDetails,
+    sentDetails,
+    deleteDetails,
+    download 
 
 }

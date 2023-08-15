@@ -21,6 +21,9 @@ router.post('/user/signup',controllerAuthentication.addUser);
 
 router.post('/user/login',controllerAuthentication.loginUser);
 
+//Download
+
+router.get('/user/download',UserAuthentication.authentication,expenseController.download);
 
 
 
