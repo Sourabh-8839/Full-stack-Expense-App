@@ -22,6 +22,8 @@ const Logout = document.getElementById('Logout');
 
 const Download = document.getElementById('Download');
 
+const pagination = document.getElementById('pagination');
+
 
 // const message = document.getElementById('message');
 
@@ -113,18 +115,22 @@ window.addEventListener('DOMContentLoaded',async()=>{
 
     const declareToken = parseJwt(token);
 
-    if(declareToken.isPremiumUser){
+    if(declareToken.isPremiumUser)
        showPremiumMessage();
       
-    }
     
- 
-    const getdetails= await axiosInstance.get('/expense/getDetails',{ headers:{"authorization":token}});
+    const page=1;
 
-    
-    for(let i=0;i<getdetails.data.length;i++){
 
-        showOnScreen(getdetails.data[i]);
+    const getdetails= await axiosInstance.get(`/expense/getDetails?page=${page}`,{ headers:{"authorization":token}});
+
+    // const expense = await axiosInstance.get(`/expense/page?=${page}`,{headers:{"authorization":token}});
+
+    showPagination(getdetails.data);
+
+    for(let i=0;i<getdetails.data.expenses.length;i++){
+
+        showOnScreen(getdetails.data.expenses[i]);
     }
     
 })
@@ -182,7 +188,7 @@ function showOnScreen(myobj) {
     userList.appendChild(li);
 
 
-    console.log(myobj);
+    // console.log(myobj);
     del.onclick = async () => {
 
         await axiosInstance.delete(`/expense/deleteDetails/${myobj.id}`,{ headers:{"Authorization":token}});
@@ -265,5 +271,65 @@ Download.onclick=async()=>{
 
     }
  
+
+}
+
+
+
+//Pagination
+
+function showPagination({
+    hasPreviousPage,
+    currentPage,
+    hasNextPage,
+    previousPage,
+    lastPage,
+    nextPage
+    }){
+
+
+    pagination.innerHTML ='';
+    pagination.classList.add ='pagination';
+
+    if(hasPreviousPage){
+
+        const btn2 = document.createElement('button');
+        btn2.innerHTML = previousPage,
+        btn2.addEventListener('click',()=>{ getProducts(previousPage)});
+        pagination.appendChild(btn2);
+
+    }
+
+    const btn1 = document.createElement('button');
+    btn1.innerHTML = `<h3>${currentPage}</h3>`;
+
+    btn1.addEventListener('click',()=>{ getProducts(currentPage)});
+
+    pagination.appendChild(btn1);
+
+    if(hasNextPage){
+
+        const btn3 = document.createElement('button');
+        btn3.innerHTML = nextPage;
+        btn3.addEventListener('click',()=>{ getProducts(nextPage)});
+        pagination.appendChild(btn3);
+    }
+
+}
+
+const getProducts= async(page)=>{
+
+    const expense =  await axiosInstance.get(`/expense/getDetails?page=${page}`,{ headers:{"authorization":token}});
+
+    userList.innerHTML = '';
+
+    for(let i=0;i<expense.data.expenses.length;i++){
+
+        showOnScreen(expense.data.expenses[i]);
+    };
+
+    showPagination(expense.data);
+   
+    
 
 }

@@ -25,11 +25,13 @@ router.post('/user/login',controllerAuthentication.loginUser);
 
 router.get('/user/download',UserAuthentication.authentication,expenseController.download);
 
+// paginataion
 
+router.get('products/page?=page',UserAuthentication.authentication,)
 
 
 //For Expense
-router.get('/expense/getDetails',UserAuthentication.authentication,expenseController.getDetails);
+router.get(`/expense/getDetails`,UserAuthentication.authentication,expenseController.getDetails);
 
 router.post('/expense/sentDetails',UserAuthentication.checkUserIdentiy,expenseController.sentDetails);
 router.delete('/expense/deleteDetails/:id',expenseController.deleteDetails);

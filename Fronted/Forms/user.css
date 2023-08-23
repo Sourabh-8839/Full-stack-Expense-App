@@ -103,13 +103,28 @@ body {
     background-color: aquamarine;
   }
   
+.expense-container{
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.paginationBar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
-  .list
-  {
+}
+
+.paginationBar button{
+  margin-right: 15px;
+  transition: ease-in;
+
+}
  
-    /* background-color: aqua; */
-  }
   
 .Expenselist {
   list-style: none;

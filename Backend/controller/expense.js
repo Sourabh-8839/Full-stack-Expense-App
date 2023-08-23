@@ -78,19 +78,37 @@ const download = async(req,res)=>{
     
 }
 
+const Item_Per_Page = 5;
 
 const getDetails =async(req,res)=>{
 
     try {
+        const page =Number(req.query.page);
+
+
+
 
         const userId= req.user.id;
-
-        const user=await expense.findAll({where:{
+        const totalItems = await expense.count({where:{
             userId:userId
         }});
+        console.log(totalItems);
+        const expenses=await expense.findAll({where:{
+            userId:userId,           
+        },
+        offset:(page-1)*Item_Per_Page,
+        limit:Item_Per_Page});
 
 
-    res.send(user);
+        res.json({
+            expenses:expenses,
+            hasPreviousPage:page>1,
+            currentPage:page,
+            hasNextPage:Item_Per_Page*page<totalItems,
+            previousPage:page-1,
+            nextPage:page+1,
+            lastPage:Math.ceil(totalItems/Item_Per_Page)
+        })
 
     } catch (error) {
         
