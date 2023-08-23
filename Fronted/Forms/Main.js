@@ -24,7 +24,7 @@ const Download = document.getElementById('Download');
 
 const pagination = document.getElementById('pagination');
 
-
+const numberOfExpenses = document.getElementById('NumberOfExpenses')
 // const message = document.getElementById('message');
 
 //buttons
@@ -114,6 +114,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
 
 
     const declareToken = parseJwt(token);
+    const noOfExpense = localStorage.getItem('numberOfExpenses');
 
     if(declareToken.isPremiumUser)
        showPremiumMessage();
@@ -122,7 +123,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
     const page=1;
 
 
-    const getdetails= await axiosInstance.get(`/expense/getDetails?page=${page}`,{ headers:{"authorization":token}});
+    const getdetails= await axiosInstance.get(`/expense/getDetails/${noOfExpense}?page=${page}`,{ headers:{"authorization":token}});
 
     // const expense = await axiosInstance.get(`/expense/page?=${page}`,{headers:{"authorization":token}});
 
@@ -319,7 +320,8 @@ function showPagination({
 
 const getProducts= async(page)=>{
 
-    const expense =  await axiosInstance.get(`/expense/getDetails?page=${page}`,{ headers:{"authorization":token}});
+    const Item_Per_Page = localStorage.getItem('numberOfExpenses');
+    const expense =  await axiosInstance.get(`/expense/getDetails/${Item_Per_Page}?page=${page}`,{ headers:{"authorization":token}});
 
     userList.innerHTML = '';
 
@@ -329,7 +331,17 @@ const getProducts= async(page)=>{
     };
 
     showPagination(expense.data);
+
+    console.log(numberOfExpenses.options[numberOfExpenses.selectedIndex].value);
    
     
 
 }
+
+numberOfExpenses.onclick=()=>{
+    
+    const value=localStorage.setItem('numberOfExpenses',numberOfExpenses.options[numberOfExpenses.selectedIndex].value);
+
+   
+}
+

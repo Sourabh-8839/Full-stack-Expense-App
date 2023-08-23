@@ -11,11 +11,13 @@
   <div class="navbar">
     <a href="#home">Expense Tracker</a>
     <div>
+     
         <button class="navButtons showInboard" id ="ShowLeaderBoard" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">LeaderBoard</button>
         <button class="navButtons showInboard" id ="Download" >Download</button>
         <button class="navButtons" id="PremiumButton">Buy Premium</button>
         <button class="navButtons " id="Logout">Logout</button>
     </div>
+  
   </div>
 
   <div class="offcanvas offcanvas-end w-100" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
@@ -61,7 +63,17 @@
           <option>Others </option>
         </select>
       </div>
-    <button type="submit" class="submit-button">Submit</button>
+      <button type="submit" class="submit-button">Submit</button>
+    <div>
+      
+      <select class="input"  id="NumberOfExpenses" name="dropdown">
+        <option value="5">5</option>
+        <option value="10" >10</option>
+        <option value="15">15</option>
+        <option value="20" >20</option>
+        <option value="25" >25</option>
+      </select>
+    </div>
    
   </form>
 

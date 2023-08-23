@@ -78,15 +78,16 @@ const download = async(req,res)=>{
     
 }
 
-const Item_Per_Page = 5;
+
 
 const getDetails =async(req,res)=>{
 
     try {
         const page =Number(req.query.page);
 
+        const Item_Per_Page= Number(req.params.Item_Per_Page) ;
 
-
+        
 
         const userId= req.user.id;
         const totalItems = await expense.count({where:{

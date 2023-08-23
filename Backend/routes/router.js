@@ -31,7 +31,7 @@ router.get('products/page?=page',UserAuthentication.authentication,)
 
 
 //For Expense
-router.get(`/expense/getDetails`,UserAuthentication.authentication,expenseController.getDetails);
+router.get(`/expense/getDetails/:Item_Per_Page`,UserAuthentication.authentication,expenseController.getDetails);
 
 router.post('/expense/sentDetails',UserAuthentication.checkUserIdentiy,expenseController.sentDetails);
 router.delete('/expense/deleteDetails/:id',expenseController.deleteDetails);
