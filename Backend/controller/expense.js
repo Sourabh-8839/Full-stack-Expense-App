@@ -1,25 +1,20 @@
 
 const {Upload} = require('@aws-sdk/lib-storage');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client} = require('@aws-sdk/client-s3');
 const expense = require('../models/Expense');
 const User = require('../models/userData');
 
-const {getSignedUrl} =require('@aws-sdk/s3-request-presigner');
-
-
-
 const sequelize = require('../utils/dataStore');
 
-const IAM_USER_KEY = 'AKIAZZ2B3CY5VEDKOFGT';
-const IAM_USER_SECRETKEY = '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';
+
 
 
 
 const S3 = new S3Client({
     region:'eu-north-1',
     credentials:{
-    accessKeyId:IAM_USER_KEY,
-    secretAccessKey:IAM_USER_SECRETKEY,
+    accessKeyId:process.env.IAM_USER_KEY,
+    secretAccessKey:process.env.IAM_USER_SECRETKEY,
     }
 })
 

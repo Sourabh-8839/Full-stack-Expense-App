@@ -70,8 +70,10 @@ const showPremiumMessage =()=>{
 // Onclick event on premium button
 buyPremium.onclick= async(e)=>{
 
+          try {
+            
           
-    const response = await axiosInstance.get('/purchase/premiummembership',{headers:{"authorization" : token}});
+    const response = await axiosInstance.get('/purchase/premiummembership',{ headers:{"authorization":token}});
   
 
 
@@ -95,13 +97,18 @@ buyPremium.onclick= async(e)=>{
             // showLeaderBoard();
             
         }
+    
+      
 
         
         }
     var rzp1 = new Razorpay(options);
     rzp1.open();
     e.preventDefault();
-    
+}
+    catch (error) {
+            console.log(error);
+    }
 
 }
 

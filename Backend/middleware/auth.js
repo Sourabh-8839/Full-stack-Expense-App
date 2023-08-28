@@ -24,7 +24,7 @@ const authentication = async(req,res,next)=>{
        next()
 
     } catch (error) {
-        return res.status(401).json({success:false});
+        return res.status(403).json({success:false});
     }
   
 

@@ -6,13 +6,13 @@ const bcrypt= require('bcrypt');
 
 
 
-
+//Mail Smpt 
 const transporter = nodemailer.createTransport({
     host: 'smtp-relay.brevo.com',
     port: 587,
     auth: {
-        user: 'sourabhsingh8839@gmail.com',
-        pass: 'xsmtpsib-ea013b516cd447385197c118557d2a329a9da2e80938b196747e920414eeaaa8-ZzfCV80Ywp5jIgdr'
+        user: process.env.BREVO_USER,
+        pass: process.env.BREVO_PASSWORD
     }
 });
 
