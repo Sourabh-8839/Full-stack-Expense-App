@@ -18,9 +18,9 @@ function isStringVaild(string){
 
 const generateToken=async(id,isPremiumUser)=>{
 
-    const secretKey='sourabh@8839';
+   
     
-    return jwt.sign({userId:id,isPremiumUser:isPremiumUser},secretKey);
+    return jwt.sign({userId:id,isPremiumUser:isPremiumUser},process.env.JWT_SECRETKEY);
 }
 
 
@@ -102,12 +102,7 @@ const loginUser =async(req,res)=>{
     }
 
 
-const forgotPassword=async(req,res)=>{
 
-    const {email}= req.body;
-
-    
-}
      
 
 
