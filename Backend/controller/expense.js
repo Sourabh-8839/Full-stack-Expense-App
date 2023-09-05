@@ -130,7 +130,7 @@ const sentDetails =async(req,res)=>{
                 userId:userId
             },{transaction:t});
     
-             await User.update(
+             await User.increment(
                 {TotalExpense:+amount},
                 {where:{
                     id:userId},

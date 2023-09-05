@@ -3,9 +3,9 @@ const fs = require('fs');
 
 
 const app = express();
-const helmet = require('helmet');
+
 const compression = require('compression');
-const morgan = require('morgan');
+
 
 const dotenv = require('dotenv');
 
@@ -32,9 +32,9 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname,'access.log'),{
 //PortNumber
 const PortNumber = process.env.Port_Number;
 
-app.use(helmet());
+
 app.use(compression());
-app.use(morgan('combined',{stream:accessLogStream}));
+
 
 //for decoding data
 app.use(bodyParser.urlencoded({extended:false}));

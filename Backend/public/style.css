@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Noto+Sans&family=Xanh+Mono:ital@1&display=swap'); 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   
+}
+body{
+
+    background-color: #999999;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+h2{
+    font-weight: bolder;
+    font-size: 30px;
+}
+.container{
+   max-width: 580px;
+   margin: 0 auto;
+   background-color: white;
+   margin-top: 2em;
+   border-radius: 1em;
+}
+.page_container{
+   display :flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+#cross{
+    padding: 5px 10px;
+    position: relative;
+    right: 250px;
+    TOP:10PX;
+    transition: 0.2s ease-in;
+
+    
+ }
+ #cross:hover{
+    cursor: pointer;
+    border: 1px transparent rgba(112, 108, 108, 0.262);
+    border-radius: 100%;
+    background-color: rgba(112, 108, 108, 0.281) ;
+    transition: 0.2s ease-in-out;
+ }
+.page_container img{
+    width: 40px;
+    height: 50px;
+}
+button{
+    border: 1px solid #a19f9f;
+    margin: 30px;
+    padding: 9px 50px;
+    border-radius: 15px;
+   
+   background-color: white;
+   font-size: 1em;
+}
+#google_login{
+    color: #999999;
+}
+#google_login img{
+    width: 15px;
+    height: 18px;
+    position: relative;
+    top :3px;
+}
+#google_login:hover{
+    cursor: pointer;
+    background-color:aliceblue;
+    border:1px solid rgb(220, 235, 249);
+    
+}
+
+.apple_login img{
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top:3px;
+}
+.apple_login{
+    border: 1px solid #a19f9f;
+    margin: 10px;
+    padding: 9px 50px;
+    border-radius: 15px;
+    font-weight:500;
+   font-size: 1em;
+    
+}
+.apple_login:hover{
+    cursor: pointer;
+    background-color: #86838339;
+    border: 1px solid  #999999;
+}
+.field{
+    margin: 10px;
+    padding: 20px 10px;
+    padding-right:120px;
+    border-radius: 4px;
+}
+
+#submit{
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: bolder;
+    padding: 8px 120px;
+}
+#submit:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.89);
+}
+#sign_up{
+    text-decoration: none;
+    color: rgb(39, 74, 156);
+}
+p{
+    margin: 30px;
+}
+#sign_up:hover{
+    text-decoration: underline;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+label{
+    font-weight: 700;
+}
+
+.msg{
+    color: rgba(186, 19, 19, 0.826);
+}
