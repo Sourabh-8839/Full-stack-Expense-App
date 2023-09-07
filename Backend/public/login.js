@@ -15,7 +15,7 @@ console.log(forgotPassword);
 
 
 const axiosInstance = axios.create({
-    baseURL:'http://localhost:4000'
+    baseURL:'http://3.110.85.129/:4000'
 })
 
 loginForm.addEventListener('submit',onLogin);

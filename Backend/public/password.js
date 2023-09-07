@@ -4,7 +4,7 @@ const email =document.getElementById('email');
 const form = document.getElementById('form');
 
 const axiosInstance = axios.create({
-    baseURL:'http://localhost:4000'
+    baseURL:'http://3.110.85.129/:4000'
 })
 
 
@@ -14,7 +14,7 @@ async (e)=>{
 
 
     console.log(email.value);
-   const ans= await axiosInstance.post('password/forgotpassword',{email:email.value});
+   const ans= await axiosInstance.post('/password/forgotpassword',{email:email.value});
 
    email.value = '';
 

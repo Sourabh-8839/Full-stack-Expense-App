@@ -10,7 +10,7 @@ const password = document.getElementById('password');
 const msg = document.getElementById('msg');
 
 const axiosInstance = axios.create({
-    baseURL:'http://localhost:4000'
+    baseURL:'http://3.110.85.129:4000'
 })
 
 signupform.addEventListener('submit',onSubmit);

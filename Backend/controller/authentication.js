@@ -30,10 +30,15 @@ const addUser = async(req,res)=>{
 try {
     const {Name,email,password}= req.body;
 
-    if(isStringVaild(Name)||isStringVaild(email)||isStringVaild(password)){
+    const check = await User.findByPk(email);
+    
+    console.log(check);
+
+
+    if(isStringVaild(Name)||isStringVaild(email)||isStringVaild(password)||check!==null){
         return res.status(400).json({error:'Bad Request , Something is missing'})
     }
-
+    
     bcrypt.hash(password,10,async(err,hash)=>{
 
         const p= await  User.create({
@@ -48,7 +53,7 @@ try {
     
 } catch (error) {
 
-    res.status(403).json(error)
+    res.status(403).json({msg:'This email is Already Exist'})
     
 }    
  };

@@ -48,6 +48,10 @@ app.use(routes);
 
 app.use(resetpassword);
 
+app.use((req,res)=>{
+    res.sendFile(path.join(__dirname,`public/${req.url}`));
+});
+
 //Joining Table
 User.hasMany(Expense);
 Expense.belongsTo(User);
