@@ -26,6 +26,7 @@ const ForgotPassword = require('./models/ForgotPasswordRequest');
 const resetpassword = require('./routes/resetpassword');
 const path = require('path');
 
+app.use(express.static(path.join(__dirname,`public`)));
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'}); 
 
 
@@ -48,9 +49,9 @@ app.use(routes);
 
 app.use(resetpassword);
 
-app.use((req,res)=>{
-    res.sendFile(path.join(__dirname,`public/${req.url}`));
-});
+// app.use((req,res)=>{
+//     res.sendFile(path.join(__dirname,`public/${req.url}`));
+// });
 
 //Joining Table
 User.hasMany(Expense);
