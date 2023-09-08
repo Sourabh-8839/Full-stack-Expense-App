@@ -18,7 +18,7 @@ async (e)=>{
 
    email.value = '';
 
-   window.location.href = 'SignIn.html';
+   window.location.href = 'index.html';
    
 
 }

@@ -38,7 +38,7 @@ LeaderBoard.onclick=()=>{
 
 Logout.onclick=()=>{
     alert("Are you want to Logout");
-    window.location.href = 'SignIn.html'
+    window.location.href = 'index.html'
 }
 
 const axiosInstance = axios.create({

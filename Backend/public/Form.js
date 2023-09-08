@@ -27,7 +27,7 @@ async function onSubmit(e){
     
         const user= await axiosInstance.post('/user/signup',myobj);
         
-        window.location.href ="SignIn.html"
+        window.location.href ="index.html"
 
     } catch (error) {
         msg.classList.add('msg');
