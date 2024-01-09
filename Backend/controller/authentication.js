@@ -1,124 +1,102 @@
-
 const bcrypt = require('bcrypt');
-const User =require('../models/userData');
+const User = require('../models/userData');
 
 const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 
-function isStringVaild(string){
-
-    if(string==undefined||string.length==0){
-        return true;
-    }
-    else{
-        return false;
-    }
-};
-
-const generateToken=async(id,isPremiumUser)=>{
-
-   
-    
-    return jwt.sign({userId:id,isPremiumUser:isPremiumUser},process.env.JWT_SECRETKEY);
+function isStringVaild(string) {
+  if (string == undefined || string.length == 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
+const generateToken = async (id, isPremiumUser) => {
+  return jwt.sign(
+    { userId: id, isPremiumUser: isPremiumUser },
+    process.env.JWT_SECRETKEY
+  );
+};
 
+const addUser = async (req, res) => {
+  try {
+    const { Name, email, password } = req.body;
 
-const addUser = async(req,res)=>{
+    // console.log(Name, email, password);
 
-try {
-    const {Name,email,password}= req.body;
+    const check = await User.find({ email: email });
 
-    const check = await User.findByPk(email);
-    
     console.log(check);
 
-
-    if(isStringVaild(Name)||isStringVaild(email)||isStringVaild(password)||check!==null){
-        return res.status(400).json({error:'Bad Request , Something is missing'})
+    if (check.length === 1) {
+      return res.status(403).json({ msg: 'User is already Exist ' });
     }
-    
-    bcrypt.hash(password,10,async(err,hash)=>{
 
-        const p= await  User.create({
-            Name:Name,
-            email:email,
-            password:hash,
+    if (
+      isStringVaild(Name) ||
+      isStringVaild(email) ||
+      isStringVaild(password)
+    ) {
+      return res
+        .status(400)
+        .json({ error: 'Bad Request , Something is missing' });
+    }
+
+    bcrypt.hash(password, 10, async (err, hash) => {
+      const p = await User.create({
+        Name: Name,
+        email: email,
+        password: hash,
+      });
+
+      res.status(201).json({ message: 'Successfully Registerd' });
     });
+  } catch (error) {
+    res.status(403).json({ success: false, msg: error.message });
+  }
+};
 
-    res.status(201).json({message:'Successfully Registerd'});
-    })
-  
-    
-} catch (error) {
+const loginUser = async (req, res) => {
+  // console.log(req.body);
 
-    res.status(403).json({msg:'This email is Already Exist'})
-    
-}    
- };
+  try {
+    const { email, password } = req.body;
 
+    const user = await User.find({ email: email });
 
-const loginUser =async(req,res)=>{
-
-    // console.log(req.body);
-
-    try {
-        const {email,password}=req.body;
-
-        const user= await User.findAll({where:{
-            email:email,
-        }});
-    
-       
-    
-        if(user.length>0){
-            
-            bcrypt.compare(password,user[0].password,async(err,result)=>{
-    
-    
-                if(err){
-                    throw new Error('Something Went Wrong');
-                }
-    
-    
-                if(result===true){
-
-                    // console.log(user[0].isPremiumUser);
-
-                    // const token=generateToken(user[0].id,user[0].isPremiumUser);
-                    return  res.status(200).json({msg:'succesfully Login',token:jwt.sign({userId:user[0].id,isPremiumUser:user[0].isPremiumUser},process.env.JWT_SECRETKEY)});
-                }
-                else{
-                    return  res.status(401).json({msg:'incorrect Password'});
-                }
-              
-            })
-        }
-        else{
-            return res.status(404).json({msg:'User Not Exist'});
+    if (user.length > 0) {
+      bcrypt.compare(password, user[0].password, async (err, result) => {
+        if (err) {
+          throw new Error('Something Went Wrong');
         }
 
-    } catch (error) {
-        res.status(500).json({msg:error,success:false});
+        if (result === true) {
+          // console.log(user[0].isPremiumUser);
+
+          // const token=generateToken(user[0].id,user[0].isPremiumUser);
+          return res.status(200).json({
+            msg: 'succesfully Login',
+            token: jwt.sign(
+              { userId: user[0].id, isPremiumUser: user[0].isPremiumUser },
+              process.env.JWT_SECRETKEY
+            ),
+          });
+        } else {
+          return res.status(401).json({ msg: 'Incorrect Password' });
+        }
+      });
+    } else {
+      return res.status(404).json({ msg: 'User Not Exist' });
     }
-   
-    
-    }
+  } catch (error) {
+    res.status(500).json({ msg: error.message, success: false });
+  }
+};
 
-
-
-     
-
-
- module.exports={
-    loginUser,
-    addUser,
-    generateToken
-
- }
-       
-
-   
-
-
+module.exports = {
+  loginUser,
+  addUser,
+  generateToken,
+};
