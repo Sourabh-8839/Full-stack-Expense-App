@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
 const ForgotPasswordSchema = mongoose.Schema({
-  uuid: String,
-  userId: mongoose.Schema.Types.ObjectId,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  },
 
+  uuid: String,
   isActive: Boolean,
 });
 

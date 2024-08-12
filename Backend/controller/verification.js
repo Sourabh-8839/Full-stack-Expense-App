@@ -12,7 +12,7 @@ const bcrypt = require('bcrypt');
 //     user: process.env.BREVO_USER,
 //     pass: process.env.BREVO_PASSWORD,
 //   },
-// });
+// });'
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email',
@@ -28,20 +28,19 @@ exports.forgotPassword = async (req, res) => {
     // console.log(req.body);
 
     const { email } = req.body;
-    console.log(email);
 
-    const user = await User.find({ email: email });
+    console.log('email from fronted', email);
+
+    const user = await User.findOne({ email: email });
 
     console.log(user);
 
     if (user) {
       const id = uuid.v4();
 
-      res.send(user);
-
       await ForgotPassword.create({
         uuid: id,
-        userId: user.id,
+        userId: user._id,
         isActive: true,
       });
 
